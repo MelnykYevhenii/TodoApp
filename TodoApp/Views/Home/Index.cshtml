@@ -1,0 +1,58 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model TodoApp.ViewModels.TaskViewModel
+
+<div class="text-center">
+    <section class="vh-100">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9 col-xl-7">
+                    <div class="card rounded-3">
+                        <div class="card-body p-4" style="background-color: #eee;">
+                            <h4 class="text-center my-3 pb-3">To Do App</h4>
+
+                            <form asp-action="Create" asp-controller="Home" class="row row-cols-lg-auto g-3 justify-content-center mb-4 pb-2" method="post">
+                                <div class="col-lg-10">
+                                    <div class="form-outline">
+                                        <input type="text" id="form" asp-for="TaskDescription" class="form-control" placeholder="Enter a task here" />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <button type="submit" class="btn btn-primary" asp-action="Create">Add</button>
+                                </div>
+                            </form>
+
+                            <table class="table mb-4">
+                                <thead>
+                                    <tr class="trClass">
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Todo item</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                    @foreach (Exercise t in Model.AllTasks)
+                                    {
+                                        <tr class="trClass">
+                                            <th scope="row">@t.Id</th>
+                                            <td>@t.TaskDescription</td>
+                                            <td>@t.TaskStatus</td>
+                                            <td>
+                                                @using (Html.BeginForm("DeleteTask", "Home"))
+                                                {
+                                                    <button type="submit" class="btn btn-danger" method="post" asp-action="DeleteTask" value="@t.Id">Delete</button>
+                                                }
+                                                <button type="submit" class="btn btn-success ms-1">Finished</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
